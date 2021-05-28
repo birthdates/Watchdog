@@ -12,3 +12,20 @@ You can initialize the Watchdog instance with `Watchdog.init(long checkDelay)` a
 with `Watchdog.getInstance()`
 
 To stop Watchdog, simply use it's `stop` function
+
+# Example
+
+```java
+import com.birthdates.watchdog.Watchdog;
+
+public class WatchdogExample {
+    public WatchdogExample() {
+        Watchdog.getInstance().startWatching(10);
+        try {
+            Thread.sleep(1000); //this will alert the watchdog
+        } catch (InterruptedException ignored) {
+        }
+        Watchdog.getInstance().tick(); //tick the current thread (basically a heartbeat, saying you're alive)
+    }
+}
+```
