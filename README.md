@@ -28,7 +28,7 @@ public class WatchdogExample {
         } catch (InterruptedException ignored) {
         }
         //tick the current thread (basically a heartbeat, saying you're alive)
-        Watchdog.getInstance().tick(); 
+        Watchdog.getInstance().tick();
     }
 }
 ```

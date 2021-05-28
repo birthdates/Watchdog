@@ -101,6 +101,7 @@ public class Watchdog {
      * Start watching the current thread
      *
      * @param minTPS Minimum TPS before thread log
+     * @throws IllegalStateException if we are watching the current thread
      */
     public void startWatching(long minTPS) {
         watch(false, minTPS);
@@ -108,6 +109,8 @@ public class Watchdog {
 
     /**
      * Stop watching the current thread
+     *
+     * @throws IllegalStateException if we aren't watching the current thread
      */
     public void stopWatching() {
         watch(true, -1);
