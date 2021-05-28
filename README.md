@@ -20,12 +20,15 @@ import com.birthdates.watchdog.Watchdog;
 
 public class WatchdogExample {
     public WatchdogExample() {
+        //start watching the current thread for tps < 10
         Watchdog.getInstance().startWatching(10);
         try {
-            Thread.sleep(1000); //this will alert the watchdog
+            //this will alert the watchdog
+            Thread.sleep(1000);
         } catch (InterruptedException ignored) {
         }
-        Watchdog.getInstance().tick(); //tick the current thread (basically a heartbeat, saying you're alive)
+        //tick the current thread (basically a heartbeat, saying you're alive)
+        Watchdog.getInstance().tick(); 
     }
 }
 ```
