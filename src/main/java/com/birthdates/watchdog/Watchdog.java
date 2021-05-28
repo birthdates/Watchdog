@@ -125,4 +125,8 @@ public class Watchdog {
     private long getThreadId() {
         return Thread.currentThread().getId();
     }
+
+    public static Watchdog getInstance() {
+        return instance;
+    }
 }
