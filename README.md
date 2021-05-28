@@ -7,6 +7,6 @@ There is a main instance (`Watchdog`) which has a few useful functions
 
 * `tick()` - Tick the current thread **(IMPORTANT)**
 
-You can initialize the Watchdog instance with `Watchdog.init()` and access it with `Watchdog.getInstance()`
+You can initialize the Watchdog instance with `Watchdog.init(long checkDelay)` and access it with `Watchdog.getInstance()`
 
 To stop Watchdog, simply use it's `stop` function

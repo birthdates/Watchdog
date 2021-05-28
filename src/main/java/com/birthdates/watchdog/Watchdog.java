@@ -15,16 +15,22 @@ public class Watchdog {
     private final Map<Long, ThreadData> threads = new HashMap<>();
     private final Thread thread;
     private boolean stop;
+    private final long checkDelay;
 
-    public Watchdog() {
+    private Watchdog(long checkDelay) {
+        this.checkDelay = checkDelay;
         (thread = new Thread(this::check, "Watchdog Thread")).start();
     }
 
-    public static void init() {
+    /**
+     * Start the watchdog instance with a certain check delay
+     * @param checkDelay Delay in milliseconds
+     */
+    public static void init(long checkDelay) {
         if (instance != null) {
             throw new IllegalStateException("Watchdog already initialized!");
         }
-        instance = new Watchdog();
+        instance = new Watchdog(checkDelay);
     }
 
     /**
@@ -34,7 +40,7 @@ public class Watchdog {
         while (!stop) {
             synchronized (thread) {
                 try {
-                    thread.wait(500L);
+                    thread.wait(checkDelay);
                 } catch (InterruptedException ignored) {
                 }
             }
