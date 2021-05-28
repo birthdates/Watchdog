@@ -14,8 +14,8 @@ public class Watchdog {
     private static Watchdog instance;
     private final Map<Long, ThreadData> threads = new HashMap<>();
     private final Thread thread;
-    private boolean stop;
     private final long checkDelay;
+    private boolean stop;
 
     private Watchdog(long checkDelay) {
         this.checkDelay = checkDelay;
@@ -24,6 +24,7 @@ public class Watchdog {
 
     /**
      * Start the watchdog instance with a certain check delay
+     *
      * @param checkDelay Delay in milliseconds
      */
     public static void init(long checkDelay) {
@@ -31,6 +32,10 @@ public class Watchdog {
             throw new IllegalStateException("Watchdog already initialized!");
         }
         instance = new Watchdog(checkDelay);
+    }
+
+    public static Watchdog getInstance() {
+        return instance;
     }
 
     /**
@@ -130,9 +135,5 @@ public class Watchdog {
 
     private long getThreadId() {
         return Thread.currentThread().getId();
-    }
-
-    public static Watchdog getInstance() {
-        return instance;
     }
 }
