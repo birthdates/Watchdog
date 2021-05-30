@@ -15,13 +15,12 @@ public class Watchdog {
     private final Map<Long, ThreadData> threads = new HashMap<>();
     private final long checkDelay;
     private final Object lock = new Object();
-    private Thread thread;
     private boolean stop;
 
     private Watchdog(long checkDelay, boolean newThread) {
         this.checkDelay = checkDelay;
         if (newThread)
-            (thread = new Thread(this::check, "Watchdog Thread")).start();
+            new Thread(this::check, "Watchdog Thread").start();
         else
             check();
     }
