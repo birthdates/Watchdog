@@ -13,25 +13,30 @@ public class Watchdog {
 
     private static Watchdog instance;
     private final Map<Long, ThreadData> threads = new HashMap<>();
-    private final Thread thread;
     private final long checkDelay;
+    private final Object lock = new Object();
+    private Thread thread;
     private boolean stop;
 
-    private Watchdog(long checkDelay) {
+    private Watchdog(long checkDelay, boolean newThread) {
         this.checkDelay = checkDelay;
-        (thread = new Thread(this::check, "Watchdog Thread")).start();
+        if (newThread)
+            (thread = new Thread(this::check, "Watchdog Thread")).start();
+        else
+            check();
     }
 
     /**
      * Start the watchdog instance with a certain check delay
      *
      * @param checkDelay Delay in milliseconds
+     * @param newThread  Should we do checking on a new thread?
      */
-    public static void init(long checkDelay) {
+    public static void init(long checkDelay, boolean newThread) {
         if (instance != null) {
             throw new IllegalStateException("Watchdog already initialized!");
         }
-        instance = new Watchdog(checkDelay);
+        instance = new Watchdog(checkDelay, newThread);
     }
 
     public static Watchdog getInstance() {
@@ -43,9 +48,9 @@ public class Watchdog {
      */
     public void check() {
         while (!stop) {
-            synchronized (thread) {
+            synchronized (lock) {
                 try {
-                    thread.wait(checkDelay);
+                    lock.wait(checkDelay);
                 } catch (InterruptedException ignored) {
                 }
             }

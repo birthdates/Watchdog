@@ -8,7 +8,7 @@ There is a main instance (`Watchdog`) which has a few useful functions
 
 * `tick()` - Tick the current thread **(IMPORTANT)**
 
-You can initialize the Watchdog instance with `Watchdog.init(long checkDelay)` and access it
+You can initialize the Watchdog instance with `Watchdog.init(long checkDelay, boolean newThread)` and access it
 with `Watchdog.getInstance()`
 
 To stop Watchdog, simply use it's `stop` function
@@ -21,6 +21,7 @@ import com.birthdates.watchdog.Watchdog;
 public class WatchdogExample {
     public WatchdogExample() {
         //start watching the current thread for tps < 10
+        Watchdog.init(5000L, true);
         Watchdog.getInstance().startWatching(10);
         try {
             //this will alert the watchdog
